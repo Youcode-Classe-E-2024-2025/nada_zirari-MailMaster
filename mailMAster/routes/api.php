@@ -11,3 +11,13 @@ Route::get('/user', function (Request $request) {
 })->middleware('auth:sanctum');
 Route::post('/register', [AuthController::class, 'register']);
 Route::post('/login', [AuthController::class, 'login']);
+
+Route::middleware(['auth:sanctum', 'web'])->group(function () {
+    Route::post('/logout', [AuthController::class, 'logout']);
+
+    Route::apiResource('newsletters', NewsletterController::class);
+
+    Route::apiResource('subscribers', SubscriberController::class);
+
+    Route::apiResource('campaigns', CampaignController::class);
+});
